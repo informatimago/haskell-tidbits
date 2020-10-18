@@ -1,3 +1,4 @@
+{-# LANGUAGE DuplicateRecordFields #-}
 
 data Quantum = Yes | No | Both deriving (Eq,Show,Read)
 
@@ -45,41 +46,44 @@ convert7 q = case q of { Yes  ->  True; No   ->  True; Both ->  True;}
 
 -- useless definitions:
 
-data ttv = ttv {
+data Ttv = Ttv {
    title :: String,
    values :: [Quantum]
 } deriving (Eq,Show,Read)
 
-data tta = tta {
-title :: String,
-function :: [Quantum -> Bool]
-} deriving (Eq,Show,Read)
+data Tta = Tta {
+    title :: String,
+    function :: [Quantum -> Bool]
+}
 
 -- actual code:
+truth_table :: [Ttv] -> [Tta]
 truth_table values actions =
-let v_title = (map title values) in
-let v_values = (map values values) in
-let a_titles = (map title actions) in
-let a_functions = (map function actions) in
-let rows = (map combine v_values) in
-let table = (cons (append v_titles a_titles)
-                  (map (\row -> (append (map show row) (map \fun -> show (apply fun row)))) rows)) in
-let width = (max_column_width table) in
-let formatted = (map (\row -> ) table) in
-
+    let v_title = (map title values) in
+    let v_values = (map values values) in
+    let a_titles = (map title actions) in
+    let a_functions = (map function actions) in
+    let rows = (map combine v_values) in
+    let table = (cons (append v_titles a_titles)
+                      (map (\row -> (append (map show row)
+                                                (map (\fun -> show (apply fun row)) a_functions)))
+                           rows)) in
+    let width = (max_column_width table) in
+    let formatted = (map (\row -> row) table) in
+    formatted
 
 
 
 
 main :: IO ()
 main = do
-  map (\r -> putStrLn r) (truthTable [ttv "Quantum" [Yes,No,Both]] [tta "convert0" convert0,
-                                                                        tta "convert1" convert1,
-                                                                            tta "convert2" convert2,
-                                                                                tta "convert3" convert3,
-                                                                                    tta "convert4" convert4,
-                                                                                        tta "convert5" convert5,
-                                                                                            tta "convert6" convert6,
-                                                                                                tta "convert7" convert7,
-                                                                                                    tta "convert8" convert8])
+  map (\r -> putStrLn r) (truthTable [Ttv "Quantum" [Yes,No,Both]] [Tta "convert0" convert0,
+                                                                        Tta "convert1" convert1,
+                                                                            Tta "convert2" convert2,
+                                                                                Tta "convert3" convert3,
+                                                                                    Tta "convert4" convert4,
+                                                                                        Tta "convert5" convert5,
+                                                                                            Tta "convert6" convert6,
+                                                                                                Tta "convert7" convert7,
+                                                                                                    Tta "convert8" convert8])
   return ()
