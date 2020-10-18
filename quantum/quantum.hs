@@ -23,15 +23,15 @@ convert7 q = case q of { Yes  ->  True; No   ->  True; Both ->  True;}
 
 -- import Data.List
 -- import Data.Maybe
--- 
+--
 -- data Quantum = Yes | No | Both deriving (Eq,Show,Read)
--- 
+--
 -- -- (loop for i below 8
 -- --       for name = (format "convert%d" i)
 -- --       do  (insert (format "%s q = [%s] !! quantumIndex q\n" name
 -- --                           (mapconcat 'symbol-name (loop for bit from 0 to 2
 -- --                                      collect (if (zerop (logand i (ash 1 bit))) 'False 'True)) ","))))
--- 
+--
 -- quantumIndex q = fromJust (elemIndex q [Yes,No,Both])
 -- convert0 q = [False,False,False] !! quantumIndex q
 -- convert1 q = [True,False,False]  !! quantumIndex q
@@ -46,8 +46,8 @@ convert7 q = case q of { Yes  ->  True; No   ->  True; Both ->  True;}
 -- useless definitions:
 
 data ttv = ttv {
-title :: String,
-values :: [Quantum]
+   title :: String,
+   values :: [Quantum]
 } deriving (Eq,Show,Read)
 
 data tta = tta {
@@ -55,6 +55,7 @@ title :: String,
 function :: [Quantum -> Bool]
 } deriving (Eq,Show,Read)
 
+-- actual code:
 truth_table values actions =
 let v_title = (map title values) in
 let v_values = (map values values) in
@@ -68,21 +69,17 @@ let formatted = (map (\row -> ) table) in
 
 
 
-truthTable [ttv "Quantum" [Yes,No,Both]] [tta "convert0" convert0,
-tta "convert1" convert1,
-tta "convert2" convert2,
-tta "convert3" convert3,
-tta "convert4" convert4,
-tta "convert5" convert5,
-tta "convert6" convert6,
-tta "convert7" convert7,
-tta "convert8" convert8,
-]
-
-
 
 
 main :: IO ()
 main = do
-putStrLn 
-return ()
+  map (\r -> putStrLn r) (truthTable [ttv "Quantum" [Yes,No,Both]] [tta "convert0" convert0,
+                                                                        tta "convert1" convert1,
+                                                                            tta "convert2" convert2,
+                                                                                tta "convert3" convert3,
+                                                                                    tta "convert4" convert4,
+                                                                                        tta "convert5" convert5,
+                                                                                            tta "convert6" convert6,
+                                                                                                tta "convert7" convert7,
+                                                                                                    tta "convert8" convert8])
+  return ()
