@@ -77,7 +77,8 @@ EXAMPLE: (COMBINE '(WWW FTP) '(EXA) '(COM ORG)))
     underlined))
 
 
-(defun main () 
+(defun main (&rest arguments)
+  (declare (ignore arguments))
   (mapc (function write-line)
         (truth-table '(("A" (t nil)))
                      (list (list "identity" (function identity)))))
