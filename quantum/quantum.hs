@@ -50,7 +50,7 @@ data Ttv = Ttv { v_title :: String
                } deriving (Eq,Show,Read)
 
 data Tta = Tta { a_title :: String
-               , function :: Quantum -> Bool
+               , function :: [Quantum] -> Bool
                }
 
 combine :: [[a]] -> [[a]]
@@ -79,7 +79,10 @@ truthTable vals actions =
       formatted = (map (\row -> row) table)
   in ["line1","line2"]
 
-data TBool = TBool { name :: String , values :: [Bool] } --worse than Python!
+data TBool = TBool { name :: String , b_values :: [Bool] } --worse than Python!
+
+first :: (Quantum -> Bool) -> [Quantum] -> Bool
+first f = (\l -> f (head l))
 
 main :: IO ()
 main = do
@@ -97,12 +100,12 @@ main = do
   --                            ,Tta "A∧B" and])
 
   mapM_ putStrLn  (truthTable [Ttv "Quantum" [Yes,No,Both]]
-                    [Tta "convert0" convert0
-                    ,Tta "convert1" convert1
-                    ,Tta "convert2" convert2
-                    ,Tta "convert3" convert3
-                    ,Tta "convert4" convert4
-                    ,Tta "convert5" convert5
-                    ,Tta "convert6" convert6
-                    ,Tta "convert7" convert7])
+                    [Tta "convert0" (first convert0)
+                    ,Tta "convert1" (first convert1)
+                    ,Tta "convert2" (first convert2)
+                    ,Tta "convert3" (first convert3)
+                    ,Tta "convert4" (first convert4)
+                    ,Tta "convert5" (first convert5)
+                    ,Tta "convert6" (first convert6)
+                    ,Tta "convert7" (first convert7)])
   return ()
