@@ -1,4 +1,4 @@
-PGMS=quantum-haskell quantum-lisp
+PGMS= quantum-lisp quantum-haskell
 
 HASKELL=ghc
 LINE=------------------------------------------------------------------------
