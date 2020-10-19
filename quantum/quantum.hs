@@ -20,7 +20,7 @@ convert6 q = case q of { Yes  -> False; No   ->  True; Both ->  True;}
 convert7 q = case q of { Yes  ->  True; No   ->  True; Both ->  True;}
 
 
-
+-- haskell-mode-hook --> (lsp turn-on-haskell-indentation)
 -- import Data.List
 -- import Data.Maybe
 --
@@ -45,40 +45,64 @@ convert7 q = case q of { Yes  ->  True; No   ->  True; Both ->  True;}
 
 -- useless definitions:
 
-data Ttv = Ttv {
-      title :: String
-    ,values :: [Quantum]
-    } deriving (Eq,Show,Read)
+data Ttv = Ttv { v_title :: String
+               , values :: [Quantum]
+               } deriving (Eq,Show,Read)
 
-           data Tta = Tta {
-                 title :: String,
-                 function :: [Quantum -> Bool]
+data Tta = Tta { a_title :: String
+               , function :: Quantum -> Bool
                }
 
+combine :: [[a]] -> [[a]]
+combine x = undefined
+-- (combine '((a b) (c d) (e f))) --> ((a c e) (a c f) (a d e) (a d f) (b c e) (b c f) (b d e) (b d f))
+cons = (:)
+append = (++)
+apply = ($)
+
+maxColumnWidth :: [[a]] -> [Int]
+maxColumnWidth x = undefined
+
 -- actual code:
-truthTable :: [Ttv] -> [Tta]
-truthTable values actions =
-    let v_title  = (map title  values)
-        v_values = (map values values)
-        a_titles = (map title  actions)
-        a_functions = (map function actions)
-        rows = (map combine v_values)
-        table = (cons (append v_titles a_titles)
-                 (map (\row -> (append (map show row)
-                                (map (\fun -> show (apply fun row)) a_functions)))
-                  rows))
-        width = (max_column_width table)
-        formatted = (map (\row -> row) table)
-    in formatted
+truthTable :: [Ttv] -> [Tta] -> [String]
+truthTable vals actions =
+  let v_titles = (map v_title  vals)
+      v_values = (map values   vals)
+      a_titles = (map a_title  actions)
+      a_functions = (map function actions)
+      rows = (apply combine v_values)
+      table = (cons (append v_titles a_titles)
+               (map (\row -> (append (map show row)
+                               (map (\fun -> show (apply fun row)) a_functions)))
+                 rows))
+      width = (maxColumnWidth table)
+      formatted = (map (\row -> row) table)
+  in ["line1","line2"]
+
+data TBool = TBool { name :: String , values :: [Bool] } --worse than Python!
 
 main :: IO ()
-main = mapM_ putStrLn  (truthTable [Ttv "Quantum" [Yes,No,Both]] [Tta "convert0" convert0
-                                                                 ,Tta "convert1" convert1
-                                                                 ,Tta "convert2" convert2
-                                                                 ,Tta "convert3" convert3
-                                                                 ,Tta "convert4" convert4
-                                                                 ,Tta "convert5" convert5
-                                                                 ,Tta "convert6" convert6
-                                                                 ,Tta "convert7" convert7
-                                                                 ,Tta "convert8" convert8])
-       return ()
+main = do
+
+    -- (mapc (function write-line)
+    --     (truth-table '(("A" (t nil)) ("B" (t nil)))
+    --                  (list (list "¬A"  (lambda (a b) (declare (ignore b)) (not a)))
+    --                        (list "A∨B" (lambda (a b) (or a b)))
+    --                        (list "A∧B" (lambda (a b) (and a b))))))
+
+  -- mapM_ putStrLn (truthTable [ TBool "A" [True, False]
+  --                            , TBool "B" [True, False]]
+  --                 [Tta "¬A"  (\a b -> not a)
+  --                            ,Tta "A∨B" or
+  --                            ,Tta "A∧B" and])
+
+  mapM_ putStrLn  (truthTable [Ttv "Quantum" [Yes,No,Both]]
+                    [Tta "convert0" convert0
+                    ,Tta "convert1" convert1
+                    ,Tta "convert2" convert2
+                    ,Tta "convert3" convert3
+                    ,Tta "convert4" convert4
+                    ,Tta "convert5" convert5
+                    ,Tta "convert6" convert6
+                    ,Tta "convert7" convert7])
+  return ()
