@@ -4,7 +4,7 @@ HASKELL=ghc
 LINE=------------------------------------------------------------------------
 all::$(PGMS)
 	@for pgm in $(PGMS) ; do echo $(LINE) ; ./$$pgm ; done ; echo $(LINE)
-
+test::all
 clean::
 	-rm -f $(PGMS) *.o *.hi *.[dl]x{32,64}fsl
 
