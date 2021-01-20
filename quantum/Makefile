@@ -1,10 +1,10 @@
 PGMS= quantum-lisp quantum-haskell
 
 HASKELL=ghc
-LINE=------------------------------------------------------------------------
+LINE=// ----------------------------------------------------------------------
 all::run
 run::$(PGMS)
-	@for pgm in $(PGMS) ; do echo $(LINE) ; echo $$pgm ; echo $(LINE) ; ./$$pgm ; done ; echo $(LINE)
+	@for pgm in $(PGMS) ; do echo $(LINE) ; echo "// $$pgm" ; echo $(LINE) ; ./$$pgm ; done ; echo $(LINE)
 test::all
 clean::
 	-rm -f $(PGMS) *.o *.hi *.[dl]x{32,64}fsl

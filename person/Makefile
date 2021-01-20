@@ -1,9 +1,9 @@
-all:person
+NAME=person
+all:$(NAME)
 test:run
-person:person.hs
-	ghc person.hs
 run:all
-	./person
+	./$(NAME)
+$(NAME):$(NAME).hs
+	ghc $(NAME).hs
 clean:
-	- rm -rf *.hi *.o person
-
+	- rm -rf *.hi *.o $(NAME)
