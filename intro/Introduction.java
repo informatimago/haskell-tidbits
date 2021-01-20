@@ -8,16 +8,21 @@ class Introduction {
       if(i>=5){
         b[i-5]=a[i];}}
 
+    String separator;
+    separator="";
     System.out.print("a = {");
     for(int i=0;i<LIMIT;i++){
-      System.out.print(a[i]);
-      System.out.print(", ");}
+      System.out.print(separator);
+      separator=", ";
+      System.out.print(a[i]);}
     System.out.println("};");
 
+    separator="";
     System.out.print("b = {");
     for(int i=0;i<LIMIT-5;i++){
-      System.out.print(b[i]);
-      System.out.print(", ");}
+      System.out.print(separator);
+      separator=", ";
+      System.out.print(b[i]);}
     System.out.println("};");
 
   }
