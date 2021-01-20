@@ -1,5 +1,22 @@
+(defparameter *comma-list-formatter*
+  "~(~A~) = {~{~A~^, ~}};~%")
+
+(defun comma-list-formatter (*standard-output* name list &rest tail)
+  (princ (string-downcase name))
+  (let ((separator " = {"))
+    (dolist (item list)
+      (princ separator)
+      (setf separator ", ")
+      (prin1 item)))
+  (princ "};")
+  (terpri)
+  tail)
+
 (defun print-comma-list (name list)
-  (format t "~(~A~) = {~{~A~^, ~}};~%" name list))
+  (format t
+          #+with-format-dsl *comma-list-formatter*
+          #-with-format-dsl (function comma-list-formatter)
+          name list))
 
 (defun main ()
   (let* ((a (loop :for n :from 2 :to 100 :by 2
