@@ -2,6 +2,7 @@ all:run
 clean:
 	- rm -rf Introduction.class Introduction.hi Introduction.o Introduction
 	- rm -rf java.out haskell.out lisp.out
+	- rm -rf \#*\# *~
 run:java.out haskell.out lisp.out
 	diff -s java.out haskell.out
 	diff -s lisp.out haskell.out
