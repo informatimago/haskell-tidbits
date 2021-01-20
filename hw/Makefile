@@ -2,11 +2,11 @@ PGMS=hw
 
 HASKELL=ghc
 LINE=------------------------------------------------------------------------
-all::$(PGMS)
+all:$(PGMS)
+test:run
+run:all
 	@for pgm in $(PGMS) ; do echo $(LINE) ; ./$$pgm ; done ; echo $(LINE)
-
-clean::
+clean:
 	-rm -f $(PGMS) *.o *.hi
-
 hw:hw.hs
 	$(HASKELL) $^

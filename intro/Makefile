@@ -1,4 +1,5 @@
 all:run
+test:run
 clean:
 	- rm -rf Introduction.class Introduction.hi Introduction.o Introduction
 	- rm -rf java.out haskell.out lisp.out

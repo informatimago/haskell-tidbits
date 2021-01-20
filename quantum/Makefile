@@ -2,7 +2,8 @@ PGMS= quantum-lisp quantum-haskell
 
 HASKELL=ghc
 LINE=------------------------------------------------------------------------
-all::$(PGMS)
+all::run
+run::$(PGMS)
 	@for pgm in $(PGMS) ; do echo $(LINE) ; echo $$pgm ; echo $(LINE) ; ./$$pgm ; done ; echo $(LINE)
 test::all
 clean::
