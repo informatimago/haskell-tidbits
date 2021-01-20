@@ -1,4 +1,4 @@
-(defparameter *comma-list-formatter*
+(defparameter *comma-list-format-control-string*
   "~(~A~) = {~{~A~^, ~}};~%")
 
 (defun comma-list-formatter (*standard-output* name list &rest tail)
@@ -14,7 +14,7 @@
 
 (defun print-comma-list (name list)
   (format t
-          #+with-format-dsl *comma-list-formatter*
+          #+with-format-dsl *comma-list-format-control-string*
           #-with-format-dsl (function comma-list-formatter)
           name list))
 
