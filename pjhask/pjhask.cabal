@@ -2,7 +2,7 @@ cabal-version: >=2
 name: pjhask
 version: 0.1.0
 build-type: Simple
-author: Pascal Jaques Bourguignon
+author: Pascal Jacques Bourguignon
 
 executable pjhask
   main-is: Main.hs
