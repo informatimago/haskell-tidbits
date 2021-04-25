@@ -1,0 +1,15 @@
+findSubst :: Eq a => a->[(a,a)]->a  
+findSubst s [] = s
+findSubst s (kv:kvs) =
+  (if s==key then val else findSubst s kvs)
+  where { (key,val) = kv }
+
+substs :: Eq a => [a]->[(a,a)]->[a] 
+substs ss [] = ss
+substs [] _ = []
+substs (s:ss) kvs =
+  (findSubst s kvs):(substs ss kvs)
+
+main :: IO ()
+main = do
+  mapM_ putStrLn (substs ["one","two","three"] [("one","un"),("two","deux"),("four","quatre")])
